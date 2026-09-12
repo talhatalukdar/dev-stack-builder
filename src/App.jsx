@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
+import Loader from "./components/Loader.jsx";
 import TechnologyGrid from "./components/TechnologyGrid.jsx";
 import YourStack from "./components/YourStack.jsx";
 
 export default function App() {
   const [technologies, setTechnologies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [stack, setStack] = useState([]);
 
   useEffect(() => {
+    let isCancelled = false;
+
     fetch(`${import.meta.env.BASE_URL}data/technologies.json`)
       .then((response) => {
         if (!response.ok) {
@@ -19,11 +24,24 @@ export default function App() {
         return response.json();
       })
       .then((data) => {
-        setTechnologies(data);
+        if (!isCancelled) {
+          setTechnologies(data);
+        }
       })
       .catch((error) => {
-        console.error(error);
+        if (!isCancelled) {
+          setLoadError(error.message);
+        }
+      })
+      .finally(() => {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
       });
+
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   const stackIds = new Set(stack.map((tech) => tech.id));
@@ -54,7 +72,7 @@ export default function App() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
       <main>
@@ -75,19 +93,27 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
-            <TechnologyGrid
-              technologies={technologies}
-              stackIds={stackIds}
-              onAdd={handleAdd}
-            />
+          {isLoading ? (
+            <Loader />
+          ) : loadError ? (
+            <p className="rounded-xl bg-rose-50 px-4 py-6 text-center text-sm text-rose-500">
+              Couldn't load the technology list: {loadError}
+            </p>
+          ) : (
+            <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
+              <TechnologyGrid
+                technologies={technologies}
+                stackIds={stackIds}
+                onAdd={handleAdd}
+              />
 
-            <YourStack
-              stack={stack}
-              onRemove={handleRemove}
-              onRemoveAll={handleRemoveAll}
-            />
-          </div>
+              <YourStack
+                stack={stack}
+                onRemove={handleRemove}
+                onRemoveAll={handleRemoveAll}
+              />
+            </div>
+          )}
         </section>
       </main>
 
@@ -96,6 +122,6 @@ export default function App() {
         autoClose={2500}
         newestOnTop
       />
-    </>
+    </div>
   );
 }
