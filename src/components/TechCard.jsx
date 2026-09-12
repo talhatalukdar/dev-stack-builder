@@ -47,7 +47,7 @@ export default function TechCard({ tech, isAdded, onAdd }) {
       <button
         type="button"
         onClick={() => onAdd(tech)}
-        disabled={isAdded}
+        
         className={
           isAdded
             ? "mt-5 w-full cursor-not-allowed rounded-xl bg-emerald-50 py-2.5 text-sm font-semibold text-emerald-600"
