@@ -5,6 +5,7 @@ import Hero from "./components/Hero.jsx";
 import Loader from "./components/Loader.jsx";
 import TechnologyGrid from "./components/TechnologyGrid.jsx";
 import YourStack from "./components/YourStack.jsx";
+import Footer from "./components/Footer.jsx";
 
 export default function App() {
   const [technologies, setTechnologies] = useState([]);
@@ -116,6 +117,8 @@ export default function App() {
           )}
         </section>
       </main>
+
+      <Footer />
 
       <ToastContainer
         position="top-right"
