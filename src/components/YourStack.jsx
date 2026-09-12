@@ -47,13 +47,13 @@ export default function YourStack({ stack, onRemove, onRemoveAll }) {
       )}
 
       {count > 0 && (
-        <button
-          type="button"
-          onClick={onRemoveAll}
-          className="mt-5 w-full rounded-xl border border-rose-200 py-2.5 text-sm font-semibold text-rose-500 transition-colors hover:bg-rose-50"
-        >
-          Remove All
-        </button>
+     <button
+  type="button"
+  onClick={onRemoveAll}
+  className="btn btn-outline btn-error mt-5 w-full rounded-xl text-sm font-semibold"
+>
+  Remove All
+</button>
       )}
     </aside>
   );

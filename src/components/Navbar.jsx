@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Logo from "./Logo.jsx";
 
@@ -43,12 +44,11 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/90 backdrop-blur">
       <nav className="mx-auto grid h-16 max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3 px-4 sm:px-6 lg:px-8">
-        
         {/* Left: Mobile Menu / Desktop Logo */}
         <div className="flex items-center">
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-lg p-2 text-slate-700 hover:bg-slate-100 md:hidden"
+            className="btn btn-ghost btn-square md:hidden"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((open) => !open)}

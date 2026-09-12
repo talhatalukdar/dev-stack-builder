@@ -44,18 +44,17 @@ export default function TechCard({ tech, isAdded, onAdd }) {
         </span>
       </div>
 
-      <button
-        type="button"
-        onClick={() => onAdd(tech)}
-        
-        className={
-          isAdded
-            ? "mt-5 w-full cursor-not-allowed rounded-xl bg-emerald-50 py-2.5 text-sm font-semibold text-emerald-600"
-            : "mt-5 w-full rounded-xl bg-slate-900 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
-        }
-      >
-        {isAdded ? "✓ Added to Stack" : "Add to Stack"}
-      </button>
+   <button
+  type="button"
+  onClick={() => onAdd(tech)}
+  className={
+    isAdded
+      ? "btn mt-5 w-full rounded-xl border-0 bg-emerald-50 py-2.5 text-sm font-semibold text-emerald-600 shadow-none hover:bg-emerald-50"
+      : "btn mt-5 w-full rounded-xl border-0 bg-slate-900 py-2.5 text-sm font-semibold text-white shadow-none hover:bg-slate-800"
+  }
+>
+  {isAdded ? "✓ Added to Stack" : "Add to Stack"}
+</button>
     </article>
   );
 }
