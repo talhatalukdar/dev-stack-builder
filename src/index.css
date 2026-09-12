@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-gradient-brand {
+    background-image: linear-gradient(
+      135deg,
+      #f97316 0%,
+      #ec4899 50%,
+      #7c3aed 100%
+    );
+  }
+
+  .text-gradient-brand {
+    background-image: linear-gradient(
+      135deg,
+      #f97316 0%,
+      #ec4899 50%,
+      #7c3aed 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+}
