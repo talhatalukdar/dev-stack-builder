@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import TechnologyGrid from "./components/TechnologyGrid.jsx";
@@ -29,18 +30,27 @@ export default function App() {
 
   const handleAdd = (tech) => {
     if (stackIds.has(tech.id)) {
+      toast.warn(`${tech.name} is already in your stack.`);
       return;
     }
 
     setStack((current) => [...current, tech]);
+    toast.success(`${tech.name} added to your stack.`);
   };
 
   const handleRemove = (id) => {
+    const removed = stack.find((tech) => tech.id === id);
+
     setStack((current) => current.filter((tech) => tech.id !== id));
+
+    if (removed) {
+      toast.info(`${removed.name} removed from your stack.`);
+    }
   };
 
   const handleRemoveAll = () => {
     setStack([]);
+    toast.info("Your stack has been cleared.");
   };
 
   return (
@@ -80,6 +90,12 @@ export default function App() {
           </div>
         </section>
       </main>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        newestOnTop
+      />
     </>
   );
 }
