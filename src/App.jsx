@@ -1,11 +1,12 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import TechnologyGrid from "./components/TechnologyGrid.jsx";
+import YourStack from "./components/YourStack.jsx";
 
 export default function App() {
   const [technologies, setTechnologies] = useState([]);
+  const [stack, setStack] = useState([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/technologies.json`)
@@ -24,6 +25,16 @@ export default function App() {
       });
   }, []);
 
+  const stackIds = new Set(stack.map((tech) => tech.id));
+
+  const handleAdd = (tech) => {
+    if (stackIds.has(tech.id)) {
+      return;
+    }
+
+    setStack((current) => [...current, tech]);
+  };
+
   return (
     <>
       <Navbar />
@@ -41,21 +52,26 @@ export default function App() {
               <span className="text-gradient-brand">Technologies</span>
             </h2>
 
-            
+            <p className="mt-2 text-slate-500">
+              Pick one technology per category to build your ideal stack.
+            </p>
           </div>
 
-          <p className="mb-4 text-red-500">
-            Technologies loaded: {technologies.length}
-          </p>
+          <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
+            <TechnologyGrid
+              technologies={technologies}
+              stackIds={stackIds}
+              onAdd={handleAdd}
+            />
 
-          <TechnologyGrid
-            technologies={technologies}
-            stackIds={new Set()}
-            onAdd={() => {}}
-          />
+            <YourStack
+              stack={stack}
+              onRemove={() => {}}
+              onRemoveAll={() => {}}
+            />
+          </div>
         </section>
       </main>
     </>
   );
 }
-
