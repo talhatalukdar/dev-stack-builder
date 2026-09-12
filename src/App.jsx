@@ -35,6 +35,14 @@ export default function App() {
     setStack((current) => [...current, tech]);
   };
 
+  const handleRemove = (id) => {
+    setStack((current) => current.filter((tech) => tech.id !== id));
+  };
+
+  const handleRemoveAll = () => {
+    setStack([]);
+  };
+
   return (
     <>
       <Navbar />
@@ -66,8 +74,8 @@ export default function App() {
 
             <YourStack
               stack={stack}
-              onRemove={() => {}}
-              onRemoveAll={() => {}}
+              onRemove={handleRemove}
+              onRemoveAll={handleRemoveAll}
             />
           </div>
         </section>
